@@ -1,3 +1,48 @@
+<?php
+include_once 'connect.php';
+$pro_id= $_GET["pro_id"];
+if(isset($_GET["id"])){
+    $id= $_GET["id"];
+}
+$query= "SELECT * FROM products INNER JOIN categories WHERE products.category_id = categories.category_id AND id='$pro_id';";
+$result= mysqli_query($conn, $query);
+$row=  mysqli_fetch_assoc($result);
+
+if(isset($_POST["submitrev"])){
+    if(isset($_GET["id"])){
+        $com= $_POST["comment"];
+        $query= "INSERT INTO comments(comment, product_id, user_id) VALUES ('$com', '$pro_id', '$id');";
+        $result= mysqli_query($conn, $query);
+    }
+    else{
+        header ("location: login.php");
+    }
+}
+
+if(isset($_GET["id"])){
+    if(isset($_GET["add"])){
+        $query2= "SELECT * FROM cart WHERE product_id=$pro_id AND user_id=$id;";
+        $result2= mysqli_query($conn, $query2);
+        $resultcheck = mysqli_num_rows($result2);
+        $row3 = mysqli_fetch_assoc($result2);
+            if($resultcheck > 0)
+            {
+                $increase= $row3['quantity'] + 1;
+                $query4= "UPDATE cart SET quantity= $increase WHERE product_id=$pro_id AND user_id=$id;";
+                $result4= mysqli_query($conn, $query4);
+            }else{
+                $query5= "INSERT INTO cart(product_id, quantity, user_id) VALUES('$pro_id', 1, '$id');";
+                $result5= mysqli_query($conn, $query5);
+            }
+    }
+}else{
+    header ("location: login.php");
+}
+
+    
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,15 +76,15 @@
             <br>
         <div id="parent">
             <div>
-                <img src="./Images/Product2.jpg" alt="Product">
+                <img src="<?php echo $row['image']?>" alt="Product">
             </div>
 
             <div>
-                <h1>Product Name</h1>
-                <h4>category: </h4>
-                <h1 id="price">$120</h1>
-                <p>Description Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p><br>
-                <input type="submit" value="Add to Cart" id="addtocart">
+                <h1><?php echo $row['name']?></h1>
+                <h4>Category: <?php echo $row['category_name']?></h4>
+                <h1 id="price">$<?php echo $row['price']?></h1>
+                <p><?php echo $row['description']?></p><br>
+                <a href='Product.php?pro_id=<?php echo $pro_id?>&id=<?php echo $id ?>&add=1' id="addtocart">Add to Cart</a>
             </div>
         </div> 
 
@@ -47,25 +92,30 @@
 
         <h1>Reviews</h1>
 
-        <div id="revs">
-            <p><i class="fa-solid fa-user"></i> <span>user name</span> </p>
-            <p>The Best Website Ever!!!!!!!!!</p>
-        </div>
-
+        <?php
+        $sql= "SELECT * FROM comments JOIN user ON comments.user_id = user.user_id JOIN products ON comments.product_id = products.id Where product_id=$pro_id;";
+        $sqlRun= mysqli_query($conn, $sql);
+        $resultcheck2 = mysqli_num_rows($sqlRun);
+                    if($resultcheck2 > 0)
+                    {
+                    while($row2 = mysqli_fetch_assoc($sqlRun))
+                    {
+                        echo '<div id="revs">
+                                <p><i class="fa-solid fa-user"></i> <span>'.$row2['first_name'].' '.$row2['last_name'].'</span> </p>
+                                <p>'.$row2['comment'].'</p>
+                            </div>';
+                    }
+                    }
+        ?>
         <br> 
         
         <div id="addrev">
-            <h2>Add your rating and review</h2>
-            <h3>Your rating*</h3>
-            <p>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            </p>
+            <h2>Add your review</h2>
             <h3>Your review*</h3>
-            <textarea></textarea>
+            <form method="post">
+            <textarea name="comment"></textarea>
+            <input type="submit" name="submitrev">
+            <form>
         </div>
 
     </div>

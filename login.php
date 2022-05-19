@@ -13,11 +13,8 @@ if (isset($_POST['submit'])){
     if ($result_check > 0) {
          while ($row=mysqli_fetch_assoc($result)) {
           if($Email== ($row['email'])&& $Password== $row['pass']){
-            $_SESSION["userEmail"]= $row['email'];
-            $_SESSION["userName"]= $row['fname'];
-            $_SESSION["userMobile"]= $row['mobile'];
-            
-            header('location:userpage.php');
+            header('location:LandingPage.php?id='.$row["user_id"].'');
+
           }else if ($Email !== ($row['email'])){
            
                   $wrong1= '<style type="text/css">

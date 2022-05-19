@@ -1,3 +1,25 @@
+<?php
+include_once 'connect.php';
+if(isset($_GET['id'])){
+    $id= $_GET['id'];
+}
+$cat_id= $_GET['cat_id'];
+$query= "SELECT * FROM products INNER JOIN categories WHERE products.category_id = categories.category_id AND products.category_id=$cat_id;";
+$result= mysqli_query($conn, $query);
+$resultcheck = mysqli_num_rows($result);
+
+$query1= "SELECT category_name FROM categories WHERE category_id=$cat_id;";
+$result1= mysqli_query($conn, $query1);
+$cat_name= mysqli_fetch_assoc($result1);
+
+if(isset($_GET["id"])){
+    $id= $_GET["id"];
+    $loginpath= "&id=".$id;
+}else{
+    $loginpath= "";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,107 +49,24 @@
     </nav>
 
     <div class="board">
-        <h1 class="bhead">Category: </h1>
+        
+        <h1 class="bhead">Category: <?php echo $cat_name['category_name'] ?></h1>
             <br>
         <div id="parent">
-            <div>
-                <a href=""><img src="./Images/Product2.jpg" alt="Product"></a>
-                <a href=""><h3>Product Name</h3></a>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
+            <?php
+        if($resultcheck > 0)
+        {
+            while($row = mysqli_fetch_assoc($result))
+            {
+                echo '<div>
+                <a href="Product.php?pro_id='.$row["id"].$loginpath.'"><img src="'.$row['image'].'" alt="Product"></a>
+                <a href="Product.php?pro_id='.$row["id"].$loginpath.'"><h3>'.$row['name'].'</h3></a>
+                <h3>$'.$row['price'].'</h3>
                 <input type="submit" value="Add to Cart">
-            </div>
-            <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div> <div>
-                <img src="./Images/Product1.jpg" alt="Product">
-                <h3>Product Name</h3>
-                <p>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </p>
-                <h3>$120</h3>
-                <input type="submit" value="Add to Cart">
-            </div>
+                </div>';
+            }
+        }
+            ?>
         </div>
        
     </div>

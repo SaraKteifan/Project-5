@@ -11,6 +11,9 @@ header div {
     width:80%;
     text-align: center;
 }
+header div .button {
+    margin: auto;
+}
 nav{
     margin-bottom: 10%;
 }
@@ -68,10 +71,11 @@ nav img {
     align-items: center;
     margin-bottom: 200px;
 }
-#categories button {
+/* #categories .button {
     width:20%;
     font-size: 20px;
-}
+    text-align: center;
+} */
 
 #discount-h1{
     text-align: center;
@@ -135,14 +139,20 @@ footer img {
 }
 
 /* ///////////////GENERAL STYLE/////////////// */
-button{
+.button{
     background-color: #0F848C;
     border: none;
     padding: 1%;
     color: white;
+    display: block;
+    width:20%;
+    font-size: 20px;
+    text-align: center;
 }
-button:hover {
+.button:hover {
     cursor: pointer;
     background-color: #333;
+    text-decoration: none;
+    color: white;
 }
 

@@ -1,3 +1,21 @@
+<?php
+include_once 'connect.php';
+
+if(isset($_GET["id"])){
+  $user_id= $_GET["id"];
+}
+if(!isset($_GET["id"])){
+  $shoppath= 'ProductsPage.php';
+  $categorypath= 'CategoriesPage.php?';
+  $cartpath= 'other/cart.php';
+}else{
+  $shoppath= 'ProductsPage.php?id='.$user_id;
+  $categorypath= 'CategoriesPage.php?id='.$user_id.'&';
+  $cartpath= 'other/cart.php?id='.$user_id;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,21 +35,29 @@
             <div id="navdiv1" class="col-6">
                 <img src="./Images/logo.png">
                 <a href="">Home</a>
-                <a href="">Shop</a>
-                <a href="">Cart</a>
-                <a href="">About Us</a>
-                <a href="">Contact Us</a>
+                <a href="<?php echo $shoppath; ?>">Shop</a>
+                <a href="<?php echo $cartpath; ?>">Cart</a>
+                <a href="aboutUs.html">About Us</a>
+                <a href="contactUs.html">Contact Us</a>
             </div>
+            
             <div id="navdiv2" class="col-2">
-                <a href="">Login</a>
-                <a href="">Register</a>
+              <?php
+              if(!isset($_GET["id"])){
+                echo '<a href="login.php">Login</a>
+                      <a href="signup.php">Register</a>';
+              }else{
+                echo '<a href="userpage.php">Account</a>';
+                echo '<a href="LandingPage.php">Log Out</a>';
+              }
+                ?>
             </div>
         </div>
         </nav>
         <div>
             <h1 id="headerh1">Welcome to Beauty Care Store</h1>
             <p id="headerp">Explore your beauty with our magnificent products</p>
-            <button>Explore Our Products</button>
+            <a class="button" href="<?php echo $shoppath; ?>">Explore Our Products</a>
         </div>
     </header>
 
@@ -39,10 +65,10 @@
     <!-- //////////////////Body//////////////////// -->
     <h1 id="categories-h1">Categories</h1>
     <div id="categories">
-        <button>Fragrance</button>
-        <button>Makeup</button>
-        <button>Hair products</button>
-        <button>Skin Care</button>
+        <a class="button" href="<?php echo $categorypath.'cat_id=2' ?>">Fragrance</a>
+        <a class="button" href="<?php echo $categorypath.'cat_id=3' ?>">Makeup</a>
+        <a class="button" href="<?php echo $categorypath.'cat_id=1' ?>">Hair products</a>
+        <a class="button" href="<?php echo $categorypath.'cat_id=4' ?>">Skin Care</a>
     </div>
 
     <h1 id="discount-h1">Discount Section</h1>
@@ -50,13 +76,6 @@
         <div class="col-3">
             <img src="./Images/Product1.jpg">
             <h4>Ariana Grande Cloud Eau de Parfum Spray</h4>
-            <p>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            </p>
             <p>$55.99</p>
         </div>
 
@@ -64,26 +83,12 @@
             <img src="./Images/Product2.jpg">
             <h4>VERSACE Eros Eau De Parfum Spray for Women
             </h4>
-            <p>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            </p>
             <p>$99.99</p>
         </div>
 
         <div class="col-3">
             <img src="./Images/Product3.jpg">
             <h4>Versace Versace Dylan Blue Pour Femme</h4>
-            <p>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            </p>
             <p>$160</p>
         </div>
     </div>

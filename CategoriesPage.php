@@ -18,6 +18,27 @@ if(isset($_GET["id"])){
 }else{
     $loginpath= "";
 }
+
+if(isset($_GET["id"])){
+    if(isset($_GET["add"])){
+        $pro_id=$_GET['pro_id'];
+        $query2= "SELECT * FROM cart WHERE product_id=$pro_id AND user_id=$id;";
+        $result2= mysqli_query($conn, $query2);
+        $resultcheck2 = mysqli_num_rows($result2);
+        $row3 = mysqli_fetch_assoc($result2);
+            if($resultcheck2 > 0)
+            {
+                $increase= $row3['quantity'] + 1;
+                $query4= "UPDATE cart SET quantity= $increase WHERE product_id=$pro_id AND user_id=$id;";
+                $result4= mysqli_query($conn, $query4);
+            }else{
+                $query5= "INSERT INTO cart(product_id, quantity, user_id) VALUES('$pro_id', 1, '$id');";
+                $result5= mysqli_query($conn, $query5);
+            }
+    }
+}// else{
+//     header ("location: login.php");
+// }
 ?>
 
 <!DOCTYPE html>
@@ -58,11 +79,17 @@ if(isset($_GET["id"])){
         {
             while($row = mysqli_fetch_assoc($result))
             {
+                if(isset($_GET['id'])){//here
+                    $path = 'CategoriesPage.php?cat_id='.$cat_id.'&pro_id='.$row["id"].'&id='.$id.'&add=1';
+                }else{
+                    $path = "login.php";
+                }
+
                 echo '<div>
                 <a href="Product.php?pro_id='.$row["id"].$loginpath.'"><img src="'.$row['image'].'" alt="Product"></a>
                 <a href="Product.php?pro_id='.$row["id"].$loginpath.'"><h3>'.$row['name'].'</h3></a>
                 <h3>$'.$row['price'].'</h3>
-                <input type="submit" value="Add to Cart">
+                <a href="'.$path.'" id="addtocart">Add to Cart</a>
                 </div>';
             }
         }

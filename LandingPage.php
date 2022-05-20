@@ -47,7 +47,7 @@ if(!isset($_GET["id"])){
                 echo '<a href="login.php">Login</a>
                       <a href="signup.php">Register</a>';
               }else{
-                echo '<a href="userpage.php">Account</a>';
+                echo '<a href="userpage.php?id='.$user_id.'">Account</a>';
                 echo '<a href="LandingPage.php">Log Out</a>';
               }
                 ?>

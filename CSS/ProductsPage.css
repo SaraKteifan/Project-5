@@ -52,7 +52,12 @@ nav{
     color: goldenrod;
 }
 
-input{
+a{
+    color: black;
+    text-decoration: none;
+}
+
+#addtocart{
     background-color: #0F848C;
     color: white;
     border: none;
@@ -60,13 +65,11 @@ input{
     font-family: sans-serif;
     font-size: 20px;
     padding: 3%;
+    display: block;
+    text-align: center;
 }
 
-input:hover{
+#addtocart:hover{
     cursor: pointer;
     background-color: #333;
-}
-a{
-    color: black;
-    text-decoration: none;
 }

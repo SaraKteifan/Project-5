@@ -4,6 +4,7 @@ $pro_id= $_GET["pro_id"];
 if(isset($_GET["id"])){
     $id= $_GET["id"];
 }
+
 $query= "SELECT * FROM products INNER JOIN categories WHERE products.category_id = categories.category_id AND id='$pro_id';";
 $result= mysqli_query($conn, $query);
 $row=  mysqli_fetch_assoc($result);
@@ -18,26 +19,29 @@ if(isset($_POST["submitrev"])){
         header ("location: login.php");
     }
 }
-
-if(isset($_GET["id"])){
-    if(isset($_GET["add"])){
-        $query2= "SELECT * FROM cart WHERE product_id=$pro_id AND user_id=$id;";
-        $result2= mysqli_query($conn, $query2);
-        $resultcheck = mysqli_num_rows($result2);
-        $row3 = mysqli_fetch_assoc($result2);
-            if($resultcheck > 0)
-            {
-                $increase= $row3['quantity'] + 1;
-                $query4= "UPDATE cart SET quantity= $increase WHERE product_id=$pro_id AND user_id=$id;";
-                $result4= mysqli_query($conn, $query4);
-            }else{
-                $query5= "INSERT INTO cart(product_id, quantity, user_id) VALUES('$pro_id', 1, '$id');";
-                $result5= mysqli_query($conn, $query5);
-            }
-    }
-}else{
-    header ("location: login.php");
+if(isset($_GET["add"])){
+    addToCart($conn, $pro_id, $id);
 }
+function addToCart($conn, $pro_id, $id){
+    if(isset($_GET["id"])){
+            $query2= "SELECT * FROM cart WHERE product_id=$pro_id AND user_id=$id;";
+            $result2= mysqli_query($conn, $query2);
+            $resultcheck = mysqli_num_rows($result2);
+            $row3 = mysqli_fetch_assoc($result2);
+                if($resultcheck > 0)
+                {
+                    $increase= $row3['quantity'] + 1;
+                    $query4= "UPDATE cart SET quantity= $increase WHERE product_id=$pro_id AND user_id=$id;";
+                    $result4= mysqli_query($conn, $query4);
+                }else{
+                    $query5= "INSERT INTO cart(product_id, quantity, user_id) VALUES('$pro_id', 1, '$id');";
+                    $result5= mysqli_query($conn, $query5);
+                }
+    }else{
+        header ("location: login.php");
+    }
+}
+
 
     
 

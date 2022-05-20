@@ -42,3 +42,19 @@ nav a:hover{
     color: #0F848C;
     text-decoration: none;
 }
+
+table{
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th{
+    padding: 20px 15px;
+}
+
+td{
+    text-align: center;
+    border-top: 1px solid rgb(140, 140, 140);
+    border-bottom: 1px solid rgb(140, 140, 140);
+    padding: 20px 0;
+}

@@ -9,15 +9,15 @@ if(isset($_GET['del_pro'])){
     $result2= mysqli_query($conn, $query2);
 }
 
-// if(isset($_POST['save'])){
-//     $newquan= $row['quantity']= $_POST['quan'];
-//     $quanid= $_POST['quanid'];
-//     echo $newquan;
-//     echo $quanid;
-//     echo $id;
-//     $query3= "UPDATE cart SET quantity=$newquan WHERE product_id=$quanid AND user_id=$id;";
-//     $result3= mysqli_query($conn, $query3);
-// }
+if(isset($_POST['save'])){
+    $newquan= $_POST['quan'];
+    $quanid= $_POST['quanid'];
+    echo $newquan;
+    echo "/".$quanid;
+    echo "/".$id;
+    $query3= "UPDATE cart SET quantity=$newquan WHERE product_id=$quanid AND user_id=$id;";
+    $result3= mysqli_query($conn, $query3);
+}
 
 if(isset($_POST['checkout'])){
 
@@ -87,8 +87,8 @@ $resultcheck = mysqli_num_rows($result);
                     </td>
                     <td>$'.$row['price'].'</td>
                     <td>
-                        <input type="number" class="num" min="1" value="'.$row['quantity'].'" name="quan'.$i.'" id="">
-                        <input type="hidden" value="'.$row['product_id'].'" name="quanid'.$i.'">
+                        <input type="number" class="num" min="1" placeholder="'.$row['quantity'].'" name="quan" id="">
+                        <input type="hidden" value="'.$row['product_id'].'" name="quanid">
                     </td>
                     <td>$'.($row['price']*$row['quantity']).'</td>
                     </tr>';

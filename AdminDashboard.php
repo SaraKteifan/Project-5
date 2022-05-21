@@ -17,35 +17,35 @@
             <span>Admin Dashboard</span>
         </div>
         <div class="col">
-            <a href=""><span>Log Out</span></a>
+            <a href="LandingPage.php"><span>Log Out</span></a>
         </div>
     </div>
     </nav>
 
     <div class="container">
         <div class="col-3">
-            <a href="">
+            <a href="AdminSales.php">
                 <h1>Sales</h1>
                 <i class="fa-solid fa-chart-column"></i>
             </a>
         </div>
 
         <div class="col-3">
-            <a href="">
+            <a href="AdminUsers.php">
                 <h1>Users</h1>
                 <i class="fa-solid fa-users"></i>
             </a>
         </div>
 
         <div class="col-3">
-            <a href="">
+            <a href="AdminCategories.php">
                 <h1>Categories</h1>
                 <i class="fa-solid fa-table"></i>
             </a>
         </div>
 
         <div class="col-3">
-            <a href="">
+            <a href="AdminProducts.php">
                 <h1>Products</h1>
                 <i class="fa-solid fa-list"></i>
             </a>
